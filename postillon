@@ -1,0 +1,16 @@
+#!/bin/bash
+# modified versoin from: http://stackoverflow.com/questions/5992638/shell-script-random-number-generating
+randomNumber()
+{
+  top=$((32768-32768%($1+1)))
+  while true; do
+    r=$RANDOM
+    [ $r -lt $top ] && break
+  done
+  echo $((r%$1+1))
+}
+
+lines=`wc -l < .postillonDB`
+line=`randomNumber $lines`
+sed -n "$line"p ~/.postillonDB
+
