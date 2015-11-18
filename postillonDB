@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#get the newest Newsticker places
+linkbase="http://www.der-postillon.com/search/label/Newsticker?max-results=150"
+
+#generate a .html file as template
+echo "<html>" > .postillonDB.html
+while [ ! -e $linkbase ]
+do
+  content=`curl -s "$linkbase"`
+  echo "$content" | grep "+++" >> ~/.postillonDB.html
+  linkbase=`echo "$content" | sed -n -e "/Ältere Posts/{s/<a class='blog-pager-older-link' href='//;s/' id='Blog1_blog-pager-older-link'.*//;p}"`
+done
+echo "</html>" >> .postillonDB.html
+
+# convert all tags into normal text
+w3m -cols 200 -dump .postillonDB.html > .postillonDB
+#clean up
+rm -f .postillonDB.html
+
