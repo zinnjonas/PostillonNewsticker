@@ -10,7 +10,7 @@ randomNumber()
   echo $((r%$1+1))
 }
 
-lines=`wc -l < .postillonDB`
+lines=`wc -l < ~/.postillonDB`
 line=`randomNumber $lines`
 sed -n "$line"p ~/.postillonDB
 
