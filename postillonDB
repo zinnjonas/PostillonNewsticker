@@ -5,7 +5,7 @@ linkbase="http://www.der-postillon.com/search/label/Newsticker?max-results=150"
 
 #generate a .html file as template
 echo "<html>" > ~/.postillonDB.html
-while [ ! -e $linkbase ]
+while [ ! -z "$linkbase" ]
 do
   content=`curl -s "$linkbase"`
   echo "$content" | grep "+++" >> ~/.postillonDB.html
